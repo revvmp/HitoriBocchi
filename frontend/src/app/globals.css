@@ -1,0 +1,206 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --auth-background: #120b16;
+  --auth-surface: rgb(23 16 29 / 90%);
+  --auth-border: rgb(255 255 255 / 15%);
+  --auth-text: #ffffff;
+  --auth-muted: #a1a1aa;
+  --auth-field: rgb(0 0 0 / 25%);
+  --auth-overlay: linear-gradient(
+    135deg,
+    rgb(16 8 20 / 90%) 0%,
+    rgb(35 14 35 / 70%) 50%,
+    rgb(12 8 18 / 88%) 100%
+  );
+  --home-background: #07131f;
+  --home-surface: #10243a;
+  --home-text: #dbeafe;
+  --home-muted: #94a3b8;
+  --home-accent: #38bdf8;
+  --home-danger: #c47a86;
+  --player-subtitle-opacity: 65%;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-auth-background: var(--auth-background);
+  --color-auth-surface: var(--auth-surface);
+  --color-auth-border: var(--auth-border);
+  --color-auth-text: var(--auth-text);
+  --color-auth-muted: var(--auth-muted);
+  --color-auth-field: var(--auth-field);
+  --color-home-background: var(--home-background);
+  --color-home-surface: var(--home-surface);
+  --color-home-text: var(--home-text);
+  --color-home-muted: var(--home-muted);
+  --color-home-accent: var(--home-accent);
+  --color-home-danger: var(--home-danger);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body:has(> .manga-reader) > header,
+body.manga-reader-route > header {
+  display: none;
+}
+
+body:has(> .manga-reader),
+body.manga-reader-route {
+  background: var(--home-background);
+}
+
+html.manga-reader-active,
+.manga-reader,
+.manga-reader * {
+  scrollbar-color: color-mix(
+    in srgb,
+    var(--home-muted) 70%,
+    var(--home-surface)
+  ) var(--home-background);
+}
+
+html.manga-reader-active::-webkit-scrollbar,
+.manga-reader::-webkit-scrollbar,
+.manga-reader *::-webkit-scrollbar {
+  width: 0.75rem;
+  height: 0.75rem;
+  background: var(--home-background);
+}
+
+html.manga-reader-active::-webkit-scrollbar-track,
+.manga-reader::-webkit-scrollbar-track,
+.manga-reader *::-webkit-scrollbar-track {
+  background: var(--home-background);
+}
+
+html.manga-reader-active::-webkit-scrollbar-thumb,
+.manga-reader::-webkit-scrollbar-thumb,
+.manga-reader *::-webkit-scrollbar-thumb {
+  border: 0.1875rem solid var(--home-background);
+  border-radius: 9999px;
+  background: color-mix(
+    in srgb,
+    var(--home-muted) 70%,
+    var(--home-surface)
+  );
+}
+
+html.manga-reader-active::-webkit-scrollbar-thumb:hover,
+.manga-reader::-webkit-scrollbar-thumb:hover,
+.manga-reader *::-webkit-scrollbar-thumb:hover {
+  background: var(--home-muted);
+}
+
+.auth-page-overlay {
+  background: var(--auth-overlay);
+}
+
+.hitoribocchi-player .vjs-skip-backward-10,
+.hitoribocchi-player .vjs-skip-forward-10 {
+  min-width: 3.5em;
+  touch-action: manipulation;
+}
+
+/* Override the inline background produced by Video.js's WebVTT renderer. */
+.hitoribocchi-player .vjs-text-track-cue > div {
+  background-color: rgb(0 0 0 / var(--player-subtitle-opacity)) !important;
+}
+
+/* In native iOS fullscreen, disable our custom cue background so only Safari's native caption box is rendered. */
+.hitoribocchi-player video::cue {
+  background-color: transparent;
+}
+
+.hitoribocchi-player .episode-skip-button {
+  background-color: #000000;
+  border: 2px solid var(--home-accent);
+  color: #ffffff;
+  opacity: 1;
+}
+
+.hitoribocchi-player .episode-skip-button:hover {
+  background-color: var(--home-background);
+}
+
+@media (max-width: 639px) {
+  .anime-grid > .anime-card:nth-child(2n) .anime-card-tooltip,
+  .manga-grid > .manga-card:nth-child(2n) .manga-card-tooltip {
+    right: calc(100% + 0.75rem);
+    left: auto;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 767px) {
+  .anime-grid > .anime-card:nth-child(3n) .anime-card-tooltip,
+  .manga-grid > .manga-card:nth-child(3n) .manga-card-tooltip {
+    right: calc(100% + 0.75rem);
+    left: auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .anime-grid > .anime-card:nth-child(4n - 1) .anime-card-tooltip,
+  .anime-grid > .anime-card:nth-child(4n) .anime-card-tooltip,
+  .manga-grid > .manga-card:nth-child(4n - 1) .manga-card-tooltip,
+  .manga-grid > .manga-card:nth-child(4n) .manga-card-tooltip {
+    right: calc(100% + 0.75rem);
+    left: auto;
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+  .anime-grid > .anime-card:nth-child(5n - 1) .anime-card-tooltip,
+  .anime-grid > .anime-card:nth-child(5n) .anime-card-tooltip,
+  .manga-grid > .manga-card:nth-child(5n - 1) .manga-card-tooltip,
+  .manga-grid > .manga-card:nth-child(5n) .manga-card-tooltip {
+    right: calc(100% + 0.75rem);
+    left: auto;
+  }
+}
+
+@media (min-width: 1280px) and (max-width: 1535px) {
+  .anime-grid > .anime-card:nth-child(8n - 1) .anime-card-tooltip,
+  .anime-grid > .anime-card:nth-child(8n) .anime-card-tooltip,
+  .manga-grid > .manga-card:nth-child(8n - 1) .manga-card-tooltip,
+  .manga-grid > .manga-card:nth-child(8n) .manga-card-tooltip {
+    right: calc(100% + 0.75rem);
+    left: auto;
+  }
+}
+
+@media (min-width: 1536px) {
+  .anime-grid > .anime-card:nth-child(9n - 1) .anime-card-tooltip,
+  .anime-grid > .anime-card:nth-child(9n) .anime-card-tooltip,
+  .manga-grid > .manga-card:nth-child(9n - 1) .manga-card-tooltip,
+  .manga-grid > .manga-card:nth-child(9n) .manga-card-tooltip {
+    right: calc(100% + 0.75rem);
+    left: auto;
+  }
+}
+
+@layer base {
+  :where(a, button, summary, select, label[for], [role="button"], [role="link"], input[type="button"], input[type="submit"], input[type="reset"], input[type="checkbox"], input[type="radio"]) {
+    cursor: pointer;
+  }
+
+  :where(button, select, input):disabled, [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
